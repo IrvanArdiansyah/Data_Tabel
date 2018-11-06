@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<style>
+    table {
+        width: 60%; border: 1px double black;
+        border-collapse: collapse;
+    }
+    th, td {
+        height: 30px; border: 1px double black;
+        border-collapse: collapse;
+    }
+</style>
+
+<body>
+<center>
+    Nama: <input type="text" id="nama">&nbsp; &nbsp;
+    Tgl. Lahir: <input type="date" id="lahir"> &nbsp; &nbsp;
+    Kota: <input type="text" id="kota" ><br/><br/>
+    
+    <button onclick="klik()">DAFTAR</button><br/><br/><br/>
+    <button onclick="SoNA()">Sort Nama ↑</button>
+    <button onclick="SoNB()">Sort Nama ↓</button>
+    <button onclick="SoUA()">Sort Usia ↑</button>
+    <button onclick="SoUB()">Sort Usia ↓</button>
+    <button onclick="SoKA()">Sort Kota ↑</button>
+    <button onclick="SoKB()">Sort Kota ↓</button><br/><br/>
+
+    <table>
+    <thead id="thead"></thead>
+    <tbody id="tbody"></tbody>
+</table>
+</center>    
+
+<script>
+    var users = []
+    var bln = ['', 'Januari', 'Febuari', 'Maret', 'April', 'Mei',
+            'Juni', 'Juli', 'Agustus', 'September', 'Oktober',
+            'November', 'Desember']
+    var date = new Date ()
+    
+    function klik() {
+        document.getElementById('tbody').innerHTML = ''
+        var data = {
+        nama: document.getElementById("nama").value,
+        tahunlahir: document.getElementById("lahir").value.slice(0,4),
+        bulanlahir: bln[parseInt(document.getElementById("lahir").value.slice(5,7))],
+        bulanangka: parseInt(document.getElementById("lahir").value.slice(5,7)),
+        tanggallahir: document.getElementById("lahir").value.slice(8,10),
+        kota: document.getElementById("kota").value,
+        usia: date.getFullYear () - document.getElementById("lahir").value.slice(0,4),
+        pensiun: 55 - (date.getFullYear () - document.getElementById("lahir").value.slice(0,4)),
+        zodiak: function () {
+            if (this.tanggallahir >= 21 && this.bulanangka >=3 || this.tanggallahir <= 19 && this.bulanangka <=4) {
+                return 'Aries'
+            } else if (this.tanggallahir >= 21 && this.bulanangka >=4 || this.tanggallahir <= 20 && this.bulanangka <=5) {
+                return 'Taurus'
+            } else if (this.tanggallahir >= 22 && this.bulanangka >=5 || this.tanggallahir <= 20 && this.bulanangka <=6) {
+                return 'Gemini'
+            } else if (this.tanggallahir >= 22 && this.bulanangka >=6 || this.tanggallahir <= 21 && this.bulanangka <=7) {
+                return 'Cancer'
+            } else if (this.tanggallahir >= 23 && this.bulanangka >=7 || this.tanggallahir <= 21 && this.bulanangka <=8) {
+                return 'Leo'
+            } else if (this.tanggallahir >= 23 && this.bulanangka >=8 || this.tanggallahir <= 21 && this.bulanangka <=9) {
+                return 'Virgo'
+            } else if (this.tanggallahir >= 23 && this.bulanangka >=9 || this.tanggallahir <= 21 && this.bulanangka <=10) {
+                return 'Libra'
+            } else if (this.tanggallahir >= 23 && this.bulanangka >=10 || this.tanggallahir <= 20 && this.bulanangka <=11) {
+                return 'Scorpio'
+            } else if (this.tanggallahir >= 22 && this.bulanangka >=11 || this.tanggallahir <= 20 && this.bulanangka <=12) {
+                return 'Sagitarius'
+            } else if (this.tanggallahir >= 22 && this.bulanangka >=12 || this.tanggallahir <= 19 && this.bulanangka <=1) {
+                'Capricorn'
+            } else if (this.tanggallahir >= 21 && this.bulanlahir >=1 || this.tanggallahir <= 18 && this.bulanangka <=2) {
+                return 'Aquarius'
+            } else {
+                return 'Pisces'
+            }
+        }
+    } 
+        users.push(data)
+        console.log(users)
+        
+        for (i=0; i<users.length; i++) {
+        document.getElementById('tbody').innerHTML += 
+        '<tr><th>' + users[i].nama + '</th><th>' 
+        + users[i].tanggallahir + '</th><th>' 
+        + users[i].bulanlahir + '</th><th>'
+        + users[i].tahunlahir + '</th><th>' 
+        + users[i].zodiak() + '</th><th>'
+        + users[i].usia + '</th><th>'
+        + users[i].pensiun + '</th><th>'
+        + users[i].kota + '</th><th><button onclick="hapus(this)" id="1" value="delete">Hapus</button></th></tr>'
+        }
+        document.getElementById('thead').innerHTML = 
+        '<tr><th>Nama</th><th colspan="3">Tanggal Lahir</th><th>Zodiak</th><th>Usia</th><th>Pensiun<th>kota</th><th>Hapus</th></tr>'   
+}   
+    </script>
+
+</body>
+</html>
